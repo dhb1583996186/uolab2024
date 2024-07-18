@@ -1,0 +1,48 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 100,
+  "data": [
+    {
+      "departmentID": "01",
+      "department": "太原工业学院",
+      "major": "计算机科学与技术"
+    }, {
+      "departmentID": "02",
+      "department": "太原工业学院",
+      "major": "计算机科学与技术"
+    }, {
+      "departmentID": "03",
+      "department": "太原工业学院",
+      "major": "计算机科学与技术"
+    }, {
+      "departmentID": "04",
+      "department": "太原工业学院",
+      "major": "计算机科学与技术"
+    }, {
+      "departmentID": "05",
+      "department": "太原工业学院",
+      "major": "计算机科学与技术"
+    }, {
+      "departmentID": "06",
+      "department": "太原工业学院",
+      "major": "计算机科学与技术"
+    }, {
+      "departmentID": "07",
+      "department": "太原工业学院",
+      "major": "计算机科学与技术"
+    }, {
+      "departmentID": "08",
+      "department": "太原工业学院",
+      "major": "计算机科学与技术"
+    }, {
+      "departmentID": "09",
+      "department": "太原工业学院",
+      "major": "计算机科学与技术"
+    }, {
+      "departmentID": "10",
+      "department": "太原工业学院",
+      "major": "计算机科学与技术"
+    }
+  ]
+}

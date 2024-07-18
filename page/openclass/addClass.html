@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../lib/layui-v2.6.3/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../css/public.css" media="all">
+  <style>
+    body {
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>添加公开课信息</legend>
+</fieldset>
+<div class="layui-form layuimini-form">
+  <div class="layui-form-item">
+    <label class="layui-form-label">院系</label>
+    <div class="layui-input-block">
+      <select name="college" lay-filter="college">
+        <option value="">--请选择院系--</option>
+        <option value="0">中北大学</option>
+        <option value="1">太原科技大学</option>
+        <option value="2">太原工业学院</option>
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">专业</label>
+    <div class="layui-input-block">
+      <select name="major" lay-filter="major">
+        <option value="">--请选择专业--</option>
+        <option value="0">计算机科学与技术</option>
+        <option value="1">软件工程</option>
+        <option value="2">电子信息</option>
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label required">年级</label>
+    <div class="layui-input-block">
+      <input id="grade" type="text" name="grade"  placeholder="请选择年级" value="" class="layui-input">
+      <tip>请选择入学年份</tip>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label required">日期</label>
+    <div class="layui-input-block">
+      <input id="data" type="text" name="data"  placeholder="请选择日期" value="" class="layui-input">
+      <tip>请选择公开课日期</tip>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label required">技术专题</label>
+    <div class="layui-input-block">
+      <input type="text"id="title" name="title" lay-verify="required" lay-reqtext="技术专题名称不能为空" placeholder="请输入技术专题名称" value="" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label required">主讲人</label>
+    <div class="layui-input-block">
+      <input type="text" id="name" name="speople" lay-verify="required" lay-reqtext="主讲人不能为空" placeholder="请输入主讲人姓名" value="" class="layui-input">
+      <tip>2-4个汉字</tip>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label required">组织人</label>
+    <div class="layui-input-block">
+      <input type="text" name="opeople" lay-verify="required" lay-reqtext="组织人不能为空" placeholder="请输入组织人姓名" value="" class="layui-input">
+      <tip>可以为多人</tip>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label required">地点</label>
+    <div class="layui-input-block">
+      <input type="text" name="address" lay-verify="required" lay-reqtext="地点不能为空" placeholder="请输入地点" value="" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+  <label class="layui-form-label required">群体说明</label>
+  <div class="layui-input-block">
+    <input type="text" name="cause" lay-verify="required" lay-reqtext="群体不能为空" placeholder="请输入群体" value="" class="layui-input">
+  </div>
+</div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">方式</label>
+    <div class="layui-input-block">
+      <select name="method" lay-filter="college">
+        <option value="">--请选择上课方式--</option>
+        <option value="0">线下</option>
+        <option value="1">直播</option>
+        <option value="2">录像</option>
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label required">创新学分值</label>
+    <div class="layui-input-block">
+      <input type="number" name="credit" lay-verify="required" lay-reqtext="学分分值不能为空" placeholder="请输入分值" value="" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label required">参加人数</label>
+    <div class="layui-input-block">
+      <input type="number" name="npeople" lay-verify="required" lay-reqtext="参加人数不能为空" placeholder="请输入参加人数" value="" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">备注信息</label>
+    <div class="layui-input-block">
+      <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+    </div>
+  </div>
+</div>
+<script src="../../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script>
+  layui.use(['form'], function () {
+    var form = layui.form,
+            layer = layui.layer,
+            laydate = layui.laydate,
+            $ = layui.$;
+
+    // 真技术专题
+    var flag3 = false;
+    $("#title").blur(function (){
+      var title = $("#title").val();
+      var reg = /^[a-zA-Z\u4e00-\u9fa5]{1,50}$/;
+      flag3 = reg.test(title);
+      if(title == null || title === '' || title.length === 0) {
+        layer.tips('专题名称不能为空', '#title', {
+          tips: [2, 'red']
+        });
+        return;
+      }
+      // 用户名是否符合正则表达式，如果不符合，提示用户名格式不正确
+      if(!flag3){
+        layer.tips('专题名称格式不正确', '#title', {
+          tips: [2, 'red'],
+          time: 3000
+        });
+      }
+    })
+    // 姓名
+    var flag = false;
+    $("#name").blur(function (){
+      var name = $("#name").val();
+      var reg = /^[\u4e00-\u9fa5]{2,4}$/;
+      flag = reg.test(name);
+      if(name == null || name === '' || name.length === 0) {
+        layer.tips('姓名不能为空', '#name', {
+          tips: [2, 'red']
+        });
+        return;
+      }
+      // 用户名是否符合正则表达式，如果不符合，提示用户名格式不正确
+      if(!flag){
+        layer.tips('姓名格式不正确', '#name', {
+          tips: [2, 'red'],
+          time: 3000
+        });
+      }
+    })
+    // 年选择器
+    laydate.render({
+      elem: '#grade',
+      type: 'year'
+    });
+    // 日历选择器
+    laydate.render({
+      elem: '#data',
+      type: 'datetime',
+      range: true
+    });
+    //监听指定开关
+    form.on('switch(switchTest)', function (data) {
+      layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+        offset: '6px'
+      });
+
+    });
+
+    //监听提交
+    form.on('submit(saveBtn)', function (data) {
+      var index = layer.alert(JSON.stringify(data.field), {
+        title: '最终的提交信息'
+      }, function () {
+
+        // 关闭弹出层
+        layer.close(index);
+
+        var iframeIndex = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(iframeIndex);
+
+      });
+
+      return false;
+    });
+
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页三</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <!--引入echarts库文件-->
+    <script src="../../js/lay-module/echarts/echarts.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/lay-module/echarts/echartsTheme.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        .top-panel {
+            border: 1px solid #eceff9;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .top-panel > .layui-card-body{
+            height: 60px;
+        }
+        .top-panel-number{
+            line-height:60px;
+            font-size: 30px;
+            border-right:1px solid #eceff9;
+        }
+        .top-panel-tips{
+            line-height:30px;
+            font-size: 12px
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>成员统计</legend>
+        </fieldset>
+        <div class="layui-form" style="margin: 10px 10px 10px 10px">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">院系</label>
+                        <div class="layui-input-inline">
+                            <select name="college" lay-filter="college">
+                                <option value="">--请选择院系--</option>
+                                <option value="0">中北大学</option>
+                                <option value="1">太原科技大学</option>
+                                <option value="2">太原工业学院</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">专业</label>
+                        <div class="layui-input-inline">
+                            <select name="major" lay-filter="major">
+                                <option value="">--请选择专业--</option>
+                                <option value="0">计算机科学与技术</option>
+                                <option value="1">软件工程</option>
+                                <option value="2">电子信息</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">年级</label>
+                        <div class="layui-input-inline">
+                            <input id="grade" type="text" name="grade"  placeholder="请选择年级" value="" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-inline">
+                            <select name="status" lay-filter="status">
+                                <option value="">--请选择状态--</option>
+                                <option value="0">正常</option>
+                                <option value="1">退出</option>
+                                <option value="2">毕业</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button type="submit" class="layui-btn"  lay-submit lay-filter="data-search-btn"><i class="layui-icon layui-icon-search"></i> 搜 索</button>
+                        <button type="reset" class="layui-btn layui-btn-primary"  ><i class="layui-icon layui-icon-refresh"></i> 重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-xs12 layui-col-md6">
+                            <div class="layui-card" style="box-shadow: 0px 0px 10px 3px gainsboro;border-radius: 20px">
+                                <div class="layui-card-header" style="font-weight: bold;font-size: 18px">成员人数统计</div>
+                                <div class="layui-card-body">
+                                    <div id="echarts-dataset" style="background-color:#ffffff;min-height:300px;padding: 10px"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs12 layui-col-md6">
+                            <div class="layui-card" style="box-shadow: 0px 0px 10px 3px gainsboro;border-radius: 20px">
+                                <div class="layui-card-header" style="font-weight: bold;font-size: 18px">各学院情况统计</div>
+                                <div class="layui-card-body">
+                                    <div id="echarts-bie" style="background-color:#ffffff;min-height:300px;padding: 10px"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form" style="margin: 10px 10px 10px 10px">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">专业名称</label>
+                        <div class="layui-input-inline">
+                            <select name="major" lay-filter="major">
+                                <option value="">--请选择专业--</option>
+                                <option value="0">计算机科学与技术</option>
+                                <option value="1">软件工程</option>
+                                <option value="2">电子信息</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">时间范围</label>
+                        <div class="layui-input-inline" style="width: 230px;">
+                            <input type="text" name="daterange" id="daterange" autocomplete="off" placeholder="请选择日期范围" class="layui-input" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                        <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon layui-icon-refresh"></i>重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--图表-->
+        <div style="padding:20px;">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-card" style="border-radius: 20px; border: 2px solid buttonface; box-shadow: 0px 0px 10px 3px gainsboro;">
+                    <div class="layui-card-header" style="font-weight: bold; font-size: 18px;">各专业成员人数比较</div>
+                    <div class="layui-card-body">
+                        <div id="histogrammajor" style="width: 100%; height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="../../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script src="../../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script>
+    layui.use(['layer', 'echarts'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            laydate = layui.laydate,
+            echarts = layui.echarts;
+        // 年选择器
+        laydate.render({
+            elem: '#grade',
+            type: 'year'
+        });
+
+       /*成员人数统计--环形图*/
+        var chartDom = document.getElementById('echarts-dataset');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                top: '5%',
+                left: 'center'
+            },
+            series: [
+                {
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: 40,
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        { value: 1048, name: '大一' },
+                        { value: 735, name: '大二' },
+                        { value: 580, name: '大三' },
+                        { value: 484, name: '大四' },
+                        { value: 300, name: '毕业' }
+                    ]
+                }
+            ]
+        };
+
+        option && myChart.setOption(option);
+
+
+        /*折线图---学院统计情况*/
+        var chartDom2 = document.getElementById('echarts-bie');
+        var myChart2 = echarts.init(chartDom2);
+        var option2;
+
+        option2 = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['太原工业学院', '太原学院', '中北大学', '太原科技', '太原理工']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['2020', '2021', '2022', '2023', '2024']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '太原工业学院',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [2170 , 1600, 2200, 2400,2296]
+                },
+                {
+                    name: '太原学院',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [400, 850, 500, 400, 900]
+                },
+                {
+                    name: '中北大学',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [2000, 1850, 2500, 1400, 1900]
+                },
+                {
+                    name: '太原科技',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [2000, 1850, 2500, 1400, 1900]
+                },
+                {
+                    name: '太原理工',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [2000, 1850, 2500, 1400, 1900]
+                }
+            ]
+        };
+
+        option2 && myChart2.setOption(option2);
+
+
+        var chartDom3 = document.getElementById('histogrammajor');
+        var myChart3 = echarts.init(chartDom3);
+        var option3;
+
+        option3 = {
+
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {},
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                boundaryGap: [0, 0.0000001]
+            },
+            yAxis: {
+                type: 'category',
+                data: ['计算机系', '经管系', '理学系', '电子工程', '自动化', '化学工程']
+            },
+            series: [
+                {
+                    name: '2023',
+                    type: 'bar',
+                    data: [400, 600, 200, 650, 950, 725]
+                },
+                {
+                    name: '2024',
+                    type: 'bar',
+                    data: [1100, 800, 300, 1150, 1600, 1125]
+                }
+                ]
+        };
+
+        option3 && myChart3.setOption(option3);
+
+
+
+
+        // echarts 窗口缩放自适应
+        window.onresize = function () {
+            myChart.resize();
+            myChart2.resize();
+            myChart3.resize();
+        }
+
+    });
+</script>
+</body>
+</html>
